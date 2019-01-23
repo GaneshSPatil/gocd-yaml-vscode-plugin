@@ -3,7 +3,7 @@
 	"$schema": "http://json-schema.org/draft-07/schema#",
 	"$id": "http://example.com/root.json",
 	"type": "object",
-	"title": "The Root Schema",
+	"title": "The Environments Schema",
 	"required": [
 		"format_version",
 		"environments"
@@ -12,26 +12,27 @@
 		"format_version": {
 			"$id": "#/properties/format_version",
 			"type": "integer",
-			"title": "The Format_version Schema",
-			"default": 0,
+			"title": "The Format Version is the version of the specified yaml configuration",
+			"default": 3,
 			"examples": [
+				1,
+				2,
 				3
 			]
 		},
 		"environments": {
 			"$id": "#/properties/environments",
 			"type": "object",
-			"title": "The Environments Schema",
+			"title": "The GoCD Environments Object Schema",
 			"required": [
-				"testing"
+				"^(label_name_[0-9]+)+$"
 			],
 			"properties": {
-				"testing": {
-					"$id": "#/properties/environments/properties/testing",
+				"^(label_name_[0-9]+)+$": {
+					"$id": "#/properties/environments/properties/environment_spec",
 					"type": "object",
-					"title": "The Testing Schema",
+					"title": "The Environment Object Schema",
 					"required": [
-						"environment_variables",
 						"secure_variables",
 						"pipelines"
 					],
@@ -39,19 +40,13 @@
 						"environment_variables": {
 							"$id": "#/properties/environments/properties/testing/properties/environment_variables",
 							"type": "object",
-							"title": "The Environment_variables Schema",
-							"required": [
-								"DEPLOYMENT"
-							],
+							"title": "The Environment Variables Schema",
 							"properties": {
-								"DEPLOYMENT": {
-									"$id": "#/properties/environments/properties/testing/properties/environment_variables/properties/DEPLOYMENT",
+								"^(label_name_[0-9]+)+$": {
+									"$id": "#/properties/environments/properties/testing/properties/environment_variables/properties/environment_variable_name",
 									"type": "string",
-									"title": "The Deployment Schema",
+									"title": "The Environment Variable Key",
 									"default": "",
-									"examples": [
-										"testing"
-									],
 									"pattern": "^(.*)$"
 								}
 							}
@@ -59,19 +54,13 @@
 						"secure_variables": {
 							"$id": "#/properties/environments/properties/testing/properties/secure_variables",
 							"type": "object",
-							"title": "The Secure_variables Schema",
-							"required": [
-								"ENV_PASSWORD"
-							],
+							"title": "The Secure Environment Variables Schema",
 							"properties": {
-								"ENV_PASSWORD": {
-									"$id": "#/properties/environments/properties/testing/properties/secure_variables/properties/ENV_PASSWORD",
+								"^(label_name_[0-9]+)+$": {
+									"$id": "#/properties/environments/properties/testing/properties/secure_variables/properties/secure_environment_variable_name",
 									"type": "string",
-									"title": "The Env_password Schema",
+									"title": "The Secure Environment Variable Key",
 									"default": "",
-									"examples": [
-										"s&Du#@$xsSa"
-									],
 									"pattern": "^(.*)$"
 								}
 							}
@@ -79,16 +68,12 @@
 						"pipelines": {
 							"$id": "#/properties/environments/properties/testing/properties/pipelines",
 							"type": "array",
-							"title": "The Pipelines Schema",
+							"title": "The Pipelines Belonging to an environment",
 							"items": {
 								"$id": "#/properties/environments/properties/testing/properties/pipelines/items",
 								"type": "string",
 								"title": "The Items Schema",
-								"default": "",
-								"examples": [
-									"example-deploy-testing",
-									"build-testing"
-								],
+								"default": "pipeline1",
 								"pattern": "^(.*)$"
 							}
 						}
