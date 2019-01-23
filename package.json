@@ -80,7 +80,9 @@
         },
         "yaml.schemas": {
           "type": "object",
-          "default": {},
+          "default": {
+            "https://raw.githubusercontent.com/GaneshSPatil/gocd-yaml-vscode-plugin/master/schemas/environment_schema.json": "/**/*.gocd.yaml"
+          },
           "description": "Associate schemas to Yaml files in the current workspace"
         },
         "yaml.format.enable": {
