@@ -1,0 +1,100 @@
+{
+	"definitions": {},
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"$id": "http://example.com/root.json",
+	"type": "object",
+	"title": "The Root Schema",
+	"required": [
+		"format_version",
+		"environments"
+	],
+	"properties": {
+		"format_version": {
+			"$id": "#/properties/format_version",
+			"type": "integer",
+			"title": "The Format_version Schema",
+			"default": 0,
+			"examples": [
+				3
+			]
+		},
+		"environments": {
+			"$id": "#/properties/environments",
+			"type": "object",
+			"title": "The Environments Schema",
+			"required": [
+				"testing"
+			],
+			"properties": {
+				"testing": {
+					"$id": "#/properties/environments/properties/testing",
+					"type": "object",
+					"title": "The Testing Schema",
+					"required": [
+						"environment_variables",
+						"secure_variables",
+						"pipelines"
+					],
+					"properties": {
+						"environment_variables": {
+							"$id": "#/properties/environments/properties/testing/properties/environment_variables",
+							"type": "object",
+							"title": "The Environment_variables Schema",
+							"required": [
+								"DEPLOYMENT"
+							],
+							"properties": {
+								"DEPLOYMENT": {
+									"$id": "#/properties/environments/properties/testing/properties/environment_variables/properties/DEPLOYMENT",
+									"type": "string",
+									"title": "The Deployment Schema",
+									"default": "",
+									"examples": [
+										"testing"
+									],
+									"pattern": "^(.*)$"
+								}
+							}
+						},
+						"secure_variables": {
+							"$id": "#/properties/environments/properties/testing/properties/secure_variables",
+							"type": "object",
+							"title": "The Secure_variables Schema",
+							"required": [
+								"ENV_PASSWORD"
+							],
+							"properties": {
+								"ENV_PASSWORD": {
+									"$id": "#/properties/environments/properties/testing/properties/secure_variables/properties/ENV_PASSWORD",
+									"type": "string",
+									"title": "The Env_password Schema",
+									"default": "",
+									"examples": [
+										"s&Du#@$xsSa"
+									],
+									"pattern": "^(.*)$"
+								}
+							}
+						},
+						"pipelines": {
+							"$id": "#/properties/environments/properties/testing/properties/pipelines",
+							"type": "array",
+							"title": "The Pipelines Schema",
+							"items": {
+								"$id": "#/properties/environments/properties/testing/properties/pipelines/items",
+								"type": "string",
+								"title": "The Items Schema",
+								"default": "",
+								"examples": [
+									"example-deploy-testing",
+									"build-testing"
+								],
+								"pattern": "^(.*)$"
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
