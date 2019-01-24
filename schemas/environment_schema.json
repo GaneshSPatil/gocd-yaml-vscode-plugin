@@ -3,7 +3,7 @@
 	"$schema": "http://json-schema.org/draft-07/schema#",
 	"$id": "http://example.com/root.json",
 	"type": "object",
-	"title": "The Environments Schema",
+	"title": "The GoCD Config Repo Configuration in YAML.",
 	"required": [
 		"format_version",
 		"environments"
@@ -12,55 +12,45 @@
 		"format_version": {
 			"$id": "#/properties/format_version",
 			"type": "integer",
-			"title": "The Format Version is the version of the specified yaml configuration",
-			"default": 3,
-			"examples": [
-				1,
-				2,
-				3
-			]
+			"title": "The format version of the config.",
+			"default": 3
 		},
 		"environments": {
 			"$id": "#/properties/environments",
 			"type": "object",
-			"title": "The GoCD Environments Object Schema",
-			"required": [
-				"^(label_name_[0-9]+)+$"
-			],
-			"properties": {
-				"^(label_name_[0-9]+)+$": {
-					"$id": "#/properties/environments/properties/environment_spec",
+			"title": "The Environments Config Definition",
+			"additionalProperties": false,
+			"patternProperties": {
+				"^.*$": {
+					"$id": "#/properties/environments/properties/testing",
 					"type": "object",
-					"title": "The Environment Object Schema",
+					"title": "The Name of the environment",
 					"required": [
-						"secure_variables",
 						"pipelines"
 					],
 					"properties": {
 						"environment_variables": {
 							"$id": "#/properties/environments/properties/testing/properties/environment_variables",
 							"type": "object",
-							"title": "The Environment Variables Schema",
-							"properties": {
-								"^(label_name_[0-9]+)+$": {
-									"$id": "#/properties/environments/properties/testing/properties/environment_variables/properties/environment_variable_name",
+							"title": "The Environment Variables Belonging to the current environment.",
+							"patternProperties": {
+								"^.*$": {
+									"$id": "#/properties/environments/properties/testing/properties/environment_variables/properties/DEPLOYMENT",
 									"type": "string",
 									"title": "The Environment Variable Key",
-									"default": "",
 									"pattern": "^(.*)$"
 								}
 							}
 						},
 						"secure_variables": {
-							"$id": "#/properties/environments/properties/testing/properties/secure_variables",
+							"$id": "#/properties/environments/properties/testing/properties/environment_variables",
 							"type": "object",
-							"title": "The Secure Environment Variables Schema",
-							"properties": {
-								"^(label_name_[0-9]+)+$": {
-									"$id": "#/properties/environments/properties/testing/properties/secure_variables/properties/secure_environment_variable_name",
+							"title": "The Secure Environment Variables Belonging to the current environment.",
+							"patternProperties": {
+								"^.*$": {
+									"$id": "#/properties/environments/properties/testing/properties/environment_variables/properties/DEPLOYMENT",
 									"type": "string",
-									"title": "The Secure Environment Variable Key",
-									"default": "",
+									"title": "The Environment Variable Key",
 									"pattern": "^(.*)$"
 								}
 							}
@@ -68,12 +58,22 @@
 						"pipelines": {
 							"$id": "#/properties/environments/properties/testing/properties/pipelines",
 							"type": "array",
-							"title": "The Pipelines Belonging to an environment",
+							"title": "The List of pipelines belonging to the current environment",
 							"items": {
 								"$id": "#/properties/environments/properties/testing/properties/pipelines/items",
 								"type": "string",
-								"title": "The Items Schema",
-								"default": "pipeline1",
+								"title": "The name of the pipeline",
+								"pattern": "^(.*)$"
+							}
+						},
+						"agents": {
+							"$id": "#/properties/environments/properties/testing/properties/pipelines",
+							"type": "array",
+							"title": "The List of agents belonging to the current environment",
+							"items": {
+								"$id": "#/properties/environments/properties/testing/properties/pipelines/items",
+								"type": "string",
+								"title": "The UUID of the agent",
 								"pattern": "^(.*)$"
 							}
 						}
